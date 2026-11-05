@@ -1,0 +1,42 @@
+App\Entity\Location:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [city, country]
+              message: 'Taka lokacja już istnieje.'
+              groups: [new]
+    properties:
+        city:
+            - NotBlank: { groups: [new, edit] }
+            - Length: { min: 2, max: 255, groups: [new, edit] }
+        country:
+            - NotBlank: { groups: [new, edit] }
+            - Country: { groups: [new, edit] }
+        latitude:
+            - NotBlank: { groups: [new, edit] }
+            - Range: { min: -90, max: 90, groups: [new, edit] }
+        longitude:
+            - NotBlank: { groups: [new, edit] }
+            - Range: { min: -180, max: 180, groups: [new, edit] }
+
+App\Entity\Measurement:
+    properties:
+        location:
+            - NotBlank: { groups: [new, edit] }
+        measuredAt:
+            - NotBlank: { groups: [new, edit] }
+            - GreaterThanOrEqual: { value: today, message: 'Prognoza nie może dotyczyć przeszłości.', groups: [new] }
+        temperatureC:
+            - NotBlank: { groups: [new, edit] }
+            - Range: { min: -90, max: 60, groups: [new, edit] }
+        humidity:
+            - NotBlank: { groups: [new, edit] }
+            - Range: { min: 0, max: 100, groups: [new, edit] }
+        pressure:
+            - NotBlank: { groups: [new, edit] }
+            - Range: { min: 870, max: 1085, groups: [new, edit] }
+        windSpeed:
+            - NotBlank: { groups: [new, edit] }
+            - PositiveOrZero: { groups: [new, edit] }
+        precipitation:
+            - NotBlank: { groups: [new, edit] }
+            - PositiveOrZero: { groups: [new, edit] }
