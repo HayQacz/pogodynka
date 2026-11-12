@@ -7,40 +7,46 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ measurement.id }}</td>
-            </tr>
-            <tr>
-                <th>MeasuredAt</th>
-                <td>{{ measurement.measuredAt ? measurement.measuredAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>TemperatureC</th>
-                <td>{{ measurement.temperatureC }}</td>
-            </tr>
-            <tr>
-                <th>Humidity</th>
-                <td>{{ measurement.humidity }}</td>
-            </tr>
-            <tr>
-                <th>Pressure</th>
-                <td>{{ measurement.pressure }}</td>
-            </tr>
-            <tr>
-                <th>WindSpeed</th>
-                <td>{{ measurement.windSpeed }}</td>
-            </tr>
-            <tr>
-                <th>Precipitation</th>
-                <td>{{ measurement.precipitation }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ measurement.id }}</td>
+        </tr>
+        <tr>
+            <th>MeasuredAt</th>
+            <td>{{ measurement.measuredAt ? measurement.measuredAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>TemperatureC</th>
+            <td>{{ measurement.temperatureC }}</td>
+        </tr>
+        <tr>
+            <th>Humidity</th>
+            <td>{{ measurement.humidity }}</td>
+        </tr>
+        <tr>
+            <th>Pressure</th>
+            <td>{{ measurement.pressure }}</td>
+        </tr>
+        <tr>
+            <th>WindSpeed</th>
+            <td>{{ measurement.windSpeed }}</td>
+        </tr>
+        <tr>
+            <th>Precipitation</th>
+            <td>{{ measurement.precipitation }}</td>
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_measurement_index') }}">back to list</a>
+    {% if is_granted('ROLE_MEASUREMENT_INDEX') %}
+        <a href="{{ path('app_measurement_index') }}">back to list</a>
+    {% endif %}
 
-    <a href="{{ path('app_measurement_edit', {'id': measurement.id}) }}">edit</a>
+    {% if is_granted('ROLE_MEASUREMENT_EDIT') %}
+        <a href="{{ path('app_measurement_edit', {'id': measurement.id}) }}">edit</a>
+    {% endif %}
 
-    {{ include('measurement/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_MEASUREMENT_DELETE') %}
+        {{ include('measurement/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}
